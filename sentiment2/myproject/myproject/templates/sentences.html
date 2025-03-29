@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentence Share</title>
+    <style>
+        /* Background & Layout */
+        body {
+            font-family: "Roboto", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0b132b, #1c2541);
+            margin: 0;
+            flex-direction: column;
+        }
+
+        /* Container */
+        .container {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 500px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Heading */
+        h1 {
+            color: #fff;
+            font-size: 26px;
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Input Box */
+        .input-box {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            margin-top: 12px;
+            font-size: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            outline: none;
+            transition: 0.3s ease-in-out;
+            resize: none;
+        }
+
+        .input-box::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .input-box:focus {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(0, 217, 255, 0.6);
+        }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(45deg, #00d9ff, #008cff);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+            font-size: 17px;
+            font-weight: 600;
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 217, 255, 0.5);
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, #008cff, #00d9ff);
+            box-shadow: 0 6px 15px rgba(0, 217, 255, 0.7);
+            transform: scale(1.05);
+        }
+
+        /* Sentence List */
+        .sentence-container {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .sentence {
+            padding: 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            transition: 0.3s ease-in-out;
+        }
+
+        .sentence:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .sentence p {
+            margin: 5px 0;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .sentence strong {
+            color: #00d9ff;
+            font-size: 15px;
+        }
+
+        /* Sentiment Badges */
+        .sentiment {
+            padding: 7px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .positive {
+            background: linear-gradient(45deg, #00ff87, #00d977);
+            color: #004d1a;
+        }
+
+        .negative {
+            background: linear-gradient(45deg, #ff4f4f, #ff1a1a);
+            color: #750000;
+        }
+
+        .neutral {
+            background: linear-gradient(45deg, #ffd700, #ffbb00);
+            color: #5a4100;
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            background: linear-gradient(45deg, #ff4f4f, #ff1a1a);
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background: linear-gradient(45deg, #ff1a1a, #ff4f4f);
+            box-shadow: 0 6px 15px rgba(255, 79, 79, 0.7);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Share your Sentiments</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <textarea name="text" class="input-box" placeholder="Enter your sentence...." required></textarea>
+            <button type="submit" class="btn">Post</button>
+        </form>
+        
+        <div class="sentence-container">
+            {% for sentence in sentences %}
+                <div class="sentence">
+                    <div>
+                        <strong>{{ sentence.user.username }}</strong> - {{ sentence.created_at|date:"F d, Y, g:i a" }}
+                        <p>{{ sentence.text }}</p>
+                    </div>
+                    <span class="sentiment {{ sentence.sentiment }}">{{ sentence.sentiment }}</span>
+                </div>
+            {% endfor %}
+        </div>
+        <br>
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn logout-btn">Sign Out</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout</title>
+    <style>
+        /* Modern Background & Font */
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            margin: 0;
+        }
+
+        /* Glassmorphism Container */
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            width: 400px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Heading Style */
+        h1 {
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #f0f0f0;
+        }
+
+        /* Button Container */
+        .button-container {
+            margin-top: 20px;
+        }
+
+        /* Stylish Login Button */
+        .button-container a {
+            display: inline-block;
+            text-decoration: none;
+            background: #ff4b5c;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 3px 8px rgba(255, 75, 92, 0.3);
+        }
+
+        .button-container a:hover {
+            background: #ff2d4a;
+            box-shadow: 0 5px 12px rgba(255, 45, 74, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>You have been logged out.</h1>
+        <div class="button-container">
+            <a href="{% url 'login' %}">Login Again</a>
+        </div>
+    </div>
+</body>
+</html>
